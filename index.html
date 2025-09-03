@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengumuman Hasil Seleksi - AJF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            line-height: 1.6; 
+            background: #f5f5f5; 
+            color: #333;
+        }
+        .container { 
+            width: 95%; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 10px; 
+        }
+        header { 
+            background: linear-gradient(135deg, #2c7a7b, #319795); 
+            color: white; 
+            padding: 15px 0; 
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 5px; 
+        }
+        .header-content p { 
+            font-size: 1rem; 
+            opacity: 0.9; 
+        }
+        .announcement-box { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px 0; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid #38b2ac;
+        }
+        .announcement-box h2 { 
+            color: #2c7a7b; 
+            margin-bottom: 15px; 
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .search-box { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin: 20px 0; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .search-input { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 25px; 
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        .filter-select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 25px; 
+            font-size: 1rem;
+            background: white;
+        }
+        .results-table { 
+            background: white; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            margin: 20px 0; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .table-header { 
+            background: #2c7a7b; 
+            color: white; 
+            padding: 15px; 
+            text-align: center;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+        th, td { 
+            padding: 12px 8px; 
+            text-align: left; 
+            border-bottom: 1px solid #e2e8f0; 
+            font-size: 0.9rem;
+        }
+        th { 
+            background: #f7fafc; 
+            font-weight: 600; 
+            position: sticky;
+            top: 0;
+        }
+        .status-badge { 
+            display: inline-block; 
+            padding: 4px 12px; 
+            border-radius: 15px; 
+            font-size: 0.8rem; 
+            font-weight: 600;
+        }
+        .status-lolos { 
+            background: #c6f6d5; 
+            color: #276749; 
+        }
+        .status-tidak { 
+            background: #fed7d7; 
+            color: #9b2c2c; 
+        }
+        .pagination { 
+            display: flex; 
+            justify-content: center; 
+            gap: 5px; 
+            margin: 20px 0; 
+            flex-wrap: wrap;
+        }
+        .page-btn { 
+            padding: 8px 12px; 
+            background: white; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+            min-width: 40px;
+            text-align: center;
+        }
+        .page-btn.active { 
+            background: #2c7a7b; 
+            color: white; 
+            border-color: #2c7a7b; 
+        }
+        .next-steps { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 20px; 
+            margin: 20px 0; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .next-steps h2 { 
+            color: #2c7a7b; 
+            margin-bottom: 15px; 
+            text-align: center;
+        }
+        .step-card { 
+            background: #f7fafc; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin: 10px 0; 
+            text-align: center;
+        }
+        .step-card i { 
+            font-size: 2rem; 
+            color: #38b2ac; 
+            margin-bottom: 10px; 
+        }
+        footer { 
+            background: #234e52; 
+            color: white; 
+            padding: 30px 0 20px; 
+            text-align: center;
+        }
+        .footer-social { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        .footer-social a { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 40px; 
+            height: 40px; 
+            background: rgba(255,255,255,0.1); 
+            color: white; 
+            border-radius: 50%; 
+            text-decoration: none;
+        }
+        .whatsapp-float { 
+            position: fixed; 
+            bottom: 20px; 
+            right: 20px; 
+            z-index: 1000;
+        }
+        .whatsapp-float a { 
+            display: block; 
+            background: #25D366; 
+            color: white; 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            text-align: center; 
+            line-height: 50px; 
+            font-size: 1.5rem; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-bullhorn"></i> Pengumuman Hasil Seleksi</h1>
+                <p>Open Requirement Asa Jiwa Foundation - Tahap 1</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Informasi Penting -->
+        <div class="announcement-box">
+            <h2><i class="fas fa-info-circle"></i> Informasi Penting</h2>
+            <p><strong>Periode:</strong> 19 Agustus-30 September2025</p>
+            <p><strong>Total Pendaftar:</strong> <span id="totalPendaftar">21</span> orang</p>
+            <p><strong>Pengumuman:</strong> 4 Oktober 2025</p>
+            <p><strong>Catatan:</strong> Peserta yang LOLOS mengikuti wawancara tahap berikutnya</p>
+        </div>
+
+        <!-- Pencarian -->
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Cari nama peserta...">
+            <select class="filter-select" id="statusFilter">
+                <option value="">Semua Status</option>
+                <option value="lolos">Lolos</option>
+                <option value="tidak">Tidak Lolos</option>
+            </select>
+        </div>
+
+        <!-- Tabel Hasil -->
+        <div class="results-table">
+            <div class="table-header">
+                <h3>Hasil Seleksi Administrasi</h3>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Asal Instansi</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data akan diisi oleh JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons akan diisi oleh JavaScript -->
+        </div>
+
+        <!-- Tahap Selanjutnya -->
+        <div class="next-steps">
+            <h2>Tahap Selanjutnya untuk Peserta Lolos</h2>
+            <div class="step-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Konfirmasi Kehadiran</h3>
+                <p>Balas email konfirmasi maksimal 3 hari</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-video"></i>
+                <h3>Wawancara Online</h3>
+                <p>Ikuti sesi wawancara via Zoom</p>
+            </div>
+            <div class="step-card">
+                <i class="fas fa-clipboard-check"></i>
+                <h3>Pengumuman Final</h3>
+                <p>15 Oktober2025</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>Asa Jiwa Foundation</h3>
+            <p>Merawat Jiwa, Menumbuhkan Asa</p>
+            <div class="footer-social">
+                <a href="https://instagram.com/asajiwa.id"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/6282228575526"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://tiktok.com/@asajiwa.id"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                &copy; 2025 Asa Jiwa Foundation
+            </p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/6282228575526"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <script>
+        // DATA PESERTA (GANTI DENGAN DATA SEBENARNYA)
+        const peserta = [
+            {nama: "Fitriani", instansi: "smpn 2 malili", status: "lolos"},
+            {nama: "Nabila azzahra", instansi: "SMAN 2 LUWU UTARA", status: "lolos"},
+            {nama: "M. Dhafa kusnadi", instansi: "Upt smpn 2 malili", status: "lolos"},
+            {nama: "Ghina Nurjannah Bramawijaya Alhaddad", instansi: "SMPN 4 Jatiwangi", status: "lolos"},
+            {nama: "Muhammad Mishbah Robithul Haq", instansi: "MAS Pesantren Al-Amin", status: "lolos"},
+            {nama: "Trisa Putri Pratama", instansi: "Stikes widya darma husada tangerang", status: "lolos"},
+            {nama: "Anwar Syihab Ibrahim", instansi: "STKIP Muhammadiyah Lumajang", status: "lolos"},
+            {nama: "Nurlaila Safitri", instansi: "Universitas Pamulang", status: "lolos"},
+            {nama: "Alvin Raysa Pratama", instansi: "SMAS An Nurmaniyah", status: "lolos"},
+            {nama: "Frida Hikmah Alifah", instansi: "sman1 mojokerto", status: "lolos"},
+            {nama: "Ghina Nurjannah Bramawijaya Alhaddad", instansi: "SMPN 4 Jatiwangi", status: "tidak"},
+            {nama: "PAJARPRIANDANA", instansi: "SMKS VETERAN CIREBON", status: "lolos"},
+            {nama: "Moh Ramdan pasa", instansi: "MAN 1 BOALEMO", status: "lolos"},
+            {nama: "Yustin Srilangka Bone", instansi: "SMK EKLESIA TENTENA", status: "lolos"},
+            {nama: "Zaenia Syakira Wahdah", instansi: "MAN 2 Karawang", status: "lolos"},
+            {nama: "Siti Aulia Zulfa", instansi: "MTS Jam'iyyatul aulad", status: "lolos"},
+            {nama: "ADITIYA", instansi: "Pps tahfidz nurul qur'an Palembang", status: "lolos"},
+            {nama: "meisyabila khairina", instansi: "STKIP Kusuma Negara", status: "lolos"},
+            {nama: "Prisma Ahmad Ramdhani", instansi: "Universitas Terbuka", status: "lolos"},
+            {nama: "Dewi Andriyani Agustin", instansi: "Pkbm Banua", status: "lolos"}
+            {nama: "Siti Aisyah Ar-Robiyah", instansi: "SMA An-Nurmaniyah", status: "lolos"}
+            // TAMBAHKAN DATA LAINNYA DI SINI...
+        ];
+
+        // VARIABEL GLOBAL
+        let dataTampil = [...peserta];
+        let halamanSekarang = 1;
+        const dataPerHalaman = 10;
+
+        // INISIALISASI
+        document.addEventListener('DOMContentLoaded', function() {
+            tampilkanTabel();
+            buatPagination();
+            
+            // EVENT LISTENER
+            document.getElementById('searchInput').addEventListener('input', filterData);
+            document.getElementById('statusFilter').addEventListener('change', filterData);
+        });
+
+        // FUNGSI FILTER DATA
+        function filterData() {
+            const cari = document.getElementById('searchInput').value.toLowerCase();
+            const status = document.getElementById('statusFilter').value;
+            
+            dataTampil = peserta.filter(p => {
+                const cocokNama = p.nama.toLowerCase().includes(cari) || 
+                                 p.instansi.toLowerCase().includes(cari);
+                const cocokStatus = !status || p.status === status;
+                return cocokNama && cocokStatus;
+            });
+            
+            halamanSekarang = 1;
+            tampilkanTabel();
+            buatPagination();
+        }
+
+        // FUNGSI TAMPILKAN TABEL
+        function tampilkanTabel() {
+            const mulai = (halamanSekarang - 1) * dataPerHalaman;
+            const akhir = mulai + dataPerHalaman;
+            const dataHalaman = dataTampil.slice(mulai, akhir);
+            
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            
+            dataHalaman.forEach((p, index) => {
+                const baris = document.createElement('tr');
+                baris.innerHTML = `
+                    <td>${mulai + index + 1}</td>
+                    <td>${p.nama}</td>
+                    <td>${p.instansi}</td>
+                    <td>
+                        <span class="status-badge ${p.status === 'lolos' ? 'status-lolos' : 'status-tidak'}">
+                            ${p.status === 'lolos' ? 'LOLOS' : 'TIDAK LOLOS'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(baris);
+            });
+        }
+
+        // FUNGSI BUAT PAGINATION
+        function buatPagination() {
+            const totalHalaman = Math.ceil(dataTampil.length / dataPerHalaman);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            // TOMBOL SEBELUMNYA
+            const btnSebelumnya = document.createElement('button');
+            btnSebelumnya.className = 'page-btn';
+            btnSebelumnya.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            btnSebelumnya.disabled = halamanSekarang === 1;
+            btnSebelumnya.onclick = () => {
+                if(halamanSekarang > 1) {
+                    halamanSekarang--;
+                    tampilkanTabel();
+                    buatPagination();
+                }
+            };
+            pagination.appendChild(btnSebelumnya);
+            
+            // NOMOR HALAMAN
+            for(let i = 1; i <= totalHalaman; i++) {
+                if(i === 1 || i === totalHalaman || (i >= halamanSekarang - 1 && i <= halamanSekarang + 1)) {
+                    const btnHalaman = document.createElement('button');
+                    btnHalaman.className = `page-btn ${i === halamanSekarang ? 'active' : ''}`;
+                    btnHalaman.textContent = i;
+                    btnHalaman.onclick = () => {
+                        halamanSekarang = i;
+                        tampilkanTabel();
+                        buatPagination();
+                    };
+                    pagination.appendChild(btnHalaman);
+                } else if(i === halamanSekarang - 2 || i === halamanSekarang + 2) {
+                    const titik = document.createElement('span');
+                    titik.textContent = '...';
+                    titik.style.padding = '0 5px';
+                    pagination.appendChild(titik);
+                }
+            }
+            
+            // TOMBOL BERIKUTNYA
+            const btnBerikutnya = document.createElement('button');
+            btnBerikutnya.className = 'page-btn';
+            btnBerikutnya.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            btnBerikutnya.disabled = halamanSekarang === totalHalaman;
+            btnBerikutnya.onclick = () => {
+                if(halamanSekarang < totalHalaman) {
+                    halamanSekarang++;
+                    tampilkanTabel();
+                    buatPagination();
+                }
+            };
+            pagination.appendChild(btnBerikutnya);
+        }
+    </script>
+</body>
+</html>
